@@ -1,0 +1,33 @@
+<%- include('../include/head.ejs') %>
+<link rel="stylesheet" href="http://localhost:5000/main.css">
+</head>
+<body>
+<%- include('../include/navigation.ejs') %>
+
+    <h1><%=pageTitle%></h1>
+    
+    <form action="/admin<%if(editmode){%>/product-edit<%}else{%>/add-product<%}%>" method="post">
+
+    </br>
+
+    <br><br><br><br>
+
+    <label>User Name</label>
+
+    <input type="text" name="username" value="<%if(editmode){%><%=product.username%><%}else{%><%}%>">
+    <%if(editmode){%>
+    <input type="hidden" name="productid" value="<%=product.id%>">
+    <%}%>
+    
+    <label>Price</label>
+
+    <input type="text" name="userid" value="<%if(editmode){%><%=product.userid%><%}else{%><%}%>">
+
+    <button type="submit">
+        
+        <% if(!editmode){%>submit<%}else{%>Update<%}%>
+
+    </button>
+</form>
+
+<%-include("../include/end.ejs")%>

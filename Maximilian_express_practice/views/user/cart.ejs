@@ -1,0 +1,33 @@
+<%-include("../include/head.ejs")%>
+
+<link rel="stylesheet" href="http://localhost:5000/product.css">
+
+<link rel="stylesheet" href="http://localhost:5000/main.css">
+
+</head>
+
+<body>
+
+<%-include("../include/navigation.ejs")%>
+
+<%if(cart.product.length > 0){%>
+    <h1>My Cart</h1>
+<%cart.product.forEach((element)=>{%>
+    
+    <div class="container">
+        <h3><%=element.id%></h3>
+        <h1><%=element.qty%></h1>
+    </div>
+    
+    <%})%>
+    
+    <label>Totle Price</label>
+    <h2><%=cart.totlePrice%></h2>
+    <button>checkout</button>
+<%}else{%>
+    <h1>Cart is Empty</h1>
+    <%}%>
+
+
+
+<%-include("../include/end.ejs")%>
