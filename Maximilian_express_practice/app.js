@@ -1,9 +1,11 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
+require("dotenv").config()
+
+const {PORT} = process.env;
 
 const app = express();
-const port = 5000;
 const adminRoutes = require("./routes/admin");
 const homeroutes = require("./routes/user");
 const errorRoute = require("./routes/error");
@@ -22,13 +24,8 @@ app.use(homeroutes); // path filtering
 
 app.use(adminRoutes);
 
-
 app.use(errorRoute);
 
-
-
-
-
-app.listen(port, () => {
-  console.log(`server running on port ${port}`);
+app.listen(PORT,()=>{
+    console.log(PORT);
 });

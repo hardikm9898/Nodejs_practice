@@ -5,10 +5,11 @@ const jsonDataPath = path.join(__dirname, "../", "data", "data.json");
 
 module.exports = class Product {
   constructor(id, username, userid) {
-    this.id =id;
+    this.id = id;
     this.username = username;
     this.userid = userid;
   }
+
   save() {
     if (this.id) {
       // find the index of existed id
@@ -19,17 +20,14 @@ module.exports = class Product {
           product = JSON.parse(content);
         }
         const existedproductIndex = product.findIndex(
-          (element) => element.id == this.id
+          (element) => Number(element.id) === Number(this.id)
         );
 
         product[existedproductIndex] = this;
-        fs.writeFile(jsonDataPath,JSON.stringify(product),(err)=>{
-            if (err) {
-                console.log("err on writing file");
-              } else {
-                console.log("Product Save!");
-              }
-        })
+        fs.writeFile(jsonDataPath, JSON.stringify(product), (error) => {
+          console.log(error);
+     
+        });
       });
     } else {
       this.id = Math.floor(Math.random() * 100);
@@ -39,16 +37,13 @@ module.exports = class Product {
           product = JSON.parse(content);
         }
         product.push(this);
-        fs.writeFile(jsonDataPath, JSON.stringify(product), (err) => {
-          if (err) {
-            console.log("err on writing file");
-          } else {
-            console.log("Product Save!");
-          }
+        fs.writeFile(jsonDataPath, JSON.stringify(product), (error) => {
+         console.log(error);
         });
       });
     }
   }
+
   static fetchAll(cb) {
     fs.readFile(jsonDataPath, (err, content) => {
       if (err) {
@@ -59,7 +54,6 @@ module.exports = class Product {
     });
   }
 
-
   static findById(id, cb) {
     fs.readFile(jsonDataPath, (err, content) => {
       if (err) {
@@ -67,38 +61,31 @@ module.exports = class Product {
       } else {
         const detailArray = JSON.parse(content);
 
-
-        const productDetail = detailArray.find((el) => el.id == id);
-
+        const productDetail = detailArray.find(
+          (el) => Number(el.id) === Number(id)
+        );
 
         cb(productDetail);
       }
     });
   }
 
-  static deletProduct(id)
-  {
-      fs.readFile(jsonDataPath,(err,content)=>{
-          
-          let product
-          if(!err){
-              product=JSON.parse(content)
-            }
+  static deletProduct(id) {
+    fs.readFile(jsonDataPath, (err, content) => {
+      let product;
+      if (!err) {
+        product = JSON.parse(content);
+      }
 
+      const deleteProductIDIndex = product.findIndex(
+        (element) => Number(element.id) === Number(id)
+      );
 
-        const deleteProductIDIndex=product.findIndex(element=>Number(element.id)===Number(id))
+      product.splice(deleteProductIDIndex, 1);
 
-   product.splice(deleteProductIDIndex,1)
-
-        
-     fs.writeFile(jsonDataPath,JSON.stringify(product),(err)=>{
-      throw err
-     })
-
-    })
-
-
+      fs.writeFile(jsonDataPath, JSON.stringify(product), (error) => {
+       console.log(error);
+      });
+    });
   }
-
-
 };

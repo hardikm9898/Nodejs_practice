@@ -1,7 +1,7 @@
 
     <%- include('../include/head.ejs') %>
-    <link rel="stylesheet" href="http://localhost:5000/product.css">
-    <link rel="stylesheet" href="http://localhost:5000/main.css">
+    <link rel="stylesheet" href="http://localhost:<%=process.env.PORT%>/product.css">
+    <link rel="stylesheet" href="http://localhost:<%=process.env.PORT%>/main.css">
 </head>
 
 <body>
@@ -25,7 +25,7 @@
                         </div>
                         <div class="card__actions">
                             <a 
-                            class="btn" href="http://localhost:5000/product-details/<%=product.id%>">detail</a>
+                            class="btn" href="http://localhost:<%=process.env.PORT%>/product-details/<%=product.id%>">detail</a>
 
                            <form action="/cart" method="post">
                                <input type="hidden" name="productid" value="<%=product.id%>">

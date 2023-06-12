@@ -74,24 +74,3 @@ http
   .listen(5000, (err) => {
     console.log("app is listing on port no.5000");
   });
-
-
-// const fs = require('fs')
-// const http= require('http')
-
-// const server=http.createServer((req,res)=>{
-//   const body=[]
-
-// // const data=JSON.stringify(req)
-// const data=req.toString()
-// // console.log(data)
-// // res.end(req)
-// res.end(data)
-// })
-
-
-// server.listen(3000,()=>{
-//   console.log("server start on port no 3000")
-// })
-
-// console.log("hello")

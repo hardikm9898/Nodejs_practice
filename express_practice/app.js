@@ -1,9 +1,14 @@
 const express = require("express");
 const fs = require("fs");
 const app = express();
-const PORT = 2000;
+
+require("dotenv").config()
+
+const {port} = process.env;
 
 const jsonData = require("./dev-data/data.json");
+const { Console } = require("console");
+const { prototype } = require("events");
 
 app.use(express.json());
 
@@ -63,14 +68,37 @@ app.patch("/api/v1/tour/:id", (req, res) => {
 });
 
 app.delete("/api/v1/tour/:id", (req, res) => {
-  let detelDataIdFind = jsonData.find((el) => el.id === req.params.id * 1);
 
-  res.status(200).json({
-    status: "success",
-    meassage: "Data Deleted",
-  });
+    fs.readFile("./dev-data/data.json", (err, data) => {
+      const deletedData = JSON.parse(data).filter(
+        (el) => el.id != req.params.id * 1
+      );
+     const checkId=JSON.parse(data).filter(
+      (el) => el.id === req.params.id * 1
+    )
+    console.log(checkId)
+      if (checkId.length===0) {
+        res.status(404).json({
+          status: "Data not Found",
+          meassage: " Id is not found",
+        });
+      } else {
+        fs.writeFile(
+          "./dev-data/data.json",
+          JSON.stringify(deletedData)
+          
+        );
+        res.status(200).json({
+          status: "success",
+          meassage: "Data Deleted",
+        });
+      }
+
+
+    });
+  
 });
 
-app.listen(PORT, () => {
+app.listen(port, () => {
   console.log(`server is running on ${PORT}`);
 });

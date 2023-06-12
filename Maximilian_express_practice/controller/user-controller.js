@@ -1,13 +1,11 @@
 const Product = require("../model/user-model");
-const Cart=require("../model/cart-model")
+const Cart = require("../model/cart-model");
 
-
-exports.postAddToCart=(req,res)=>{
-  const id=req.body.productid
-  const productPrice=req.body.productPrice
-Cart.addProduct(id,productPrice)
-res.redirect("/cart")
-}
+exports.postAddToCart = (req, res) => {
+  const id = req.body.productid;
+  Cart.addProduct(id, req.body.productPrice);
+  res.redirect("/cart");
+};
 
 exports.getUser = (req, res) => {
   Product.fetchAll((product) => {
@@ -19,15 +17,13 @@ exports.getUser = (req, res) => {
   });
 };
 exports.getCart = (req, res) => {
-
-Cart.fetchAllCart((cart)=>{
-  res.render("user/cart", {
-    cart:cart,
-    pageTitle: "your cart",
-    path: "/cart",
-
+  Cart.fetchAllCart((cart) => {
+    res.render("user/cart", {
+      cart,
+      pageTitle: "your cart",
+      path: "/cart",
+    });
   });
-})
 };
 exports.getCheckout = (req, res) => {
   res.render("user/checkout", {
@@ -37,20 +33,13 @@ exports.getCheckout = (req, res) => {
   // });
 };
 exports.getProductDetails = (req, res) => {
-
   const id = req.params.product;
 
   Product.findById(id, (product) => {
-        res.render("user/product-detail", {
+    res.render("user/product-detail", {
       prods: product,
       pageTitle: "Product Detail",
       path: "/product-detail",
-
     });
-
   });
 };
-
- 
-  
-

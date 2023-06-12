@@ -18,7 +18,9 @@ module.exports = class Cart {
    
 
   }
+
   static addProduct(id, productPrice) {
+
     // fetching The all data
 
     let cart = { product: [], totlePrice: 0 };
@@ -39,20 +41,20 @@ module.exports = class Cart {
 
       if (existedProduct) {
         updatedData = { ...existedProduct };
-        updatedData.qty = updatedData.qty + 1;
+        updatedData.qty += 1;
         cart.product[existedProductIndex]=updatedData
         
       }
       else{
-        updatedData={id:id,qty:1}
+        updatedData={id,qty:1}
         cart.product.push(updatedData)
     }
 
       cart.totlePrice = Number(cart.totlePrice) + Number(productPrice);
 
-      fs.writeFile(cartDataPath,JSON.stringify(cart),(err)=>{
+      fs.writeFile(cartDataPath,JSON.stringify(cart),(error)=>{
 
-throw err 
+console.log(error)
      })
     });
   }

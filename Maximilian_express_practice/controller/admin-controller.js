@@ -1,9 +1,9 @@
 const Product = require("../model/user-model");
 
 exports.postAdminproduct = (req, res) => {
-  const { username } = req.body.username;
-  const { userid } = req.body.userid;
-  const product = new Product(null, username, userid);
+  
+  const {username,userid}= req.body
+  const product = new Product(null,username,userid);
   product.save();
   res.redirect("/user");
 };
